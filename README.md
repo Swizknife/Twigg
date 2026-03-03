@@ -77,6 +77,9 @@ If you use a Chromium-based browser other than Chrome, the steps are similar.
 
 ## Production Build
 
+
+## Production Build
+
 Build the extension:
 
 ```bash
@@ -137,5 +140,7 @@ This project is provided under the MIT License. See the `LICENSE` file for detai
 If you have questions or want to collaborate, open an issue or reach out to the repository owner.
 
 ---
+ 
+Generated/updated README.md to better reflect the Twigg project and development workflow.
 
 Generated/updated README.md to better reflect the Twigg project and development workflow.
