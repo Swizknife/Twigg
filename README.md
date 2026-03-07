@@ -1,4 +1,4 @@
-# Twigg — AI Browser Sidebar
+# Twigg — AI Browser Sidebar (BROWSER EXTENSION)
 
 Build and develop the Twigg browser extension
 
