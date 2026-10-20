@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "Twigg",
+  "version": "0.1.0",
+  "description": "Job-hunt copilot: page Q&A, autofill, LinkedIn posts, role tracking. Your data stays on your laptop.",
+  "minimum_chrome_version": "116",
+  "permissions": ["sidePanel", "storage", "unlimitedStorage", "scripting", "alarms", "notifications"],
+  "host_permissions": ["<all_urls>"],
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content/extract.js", "content/adapters.js", "content/detect.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "side_panel": {
+    "default_path": "sidepanel/sidepanel.html"
+  },
+  "options_page": "options/options.html",
+  "action": {
+    "default_title": "Open Twigg (Alt+T)",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": { "default": "Alt+T" },
+      "description": "Open the Twigg side panel"
+    },
+    "fill-page": {
+      "suggested_key": { "default": "Alt+F" },
+      "description": "Fill the application form on this page"
+    }
+  }
+}

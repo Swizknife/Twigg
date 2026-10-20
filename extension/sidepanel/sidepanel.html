@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Twigg</title>
+    <link rel="stylesheet" href="../ui/theme.css" />
+    <link rel="stylesheet" href="sidepanel.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <img src="../icons/icon32.png" alt="" width="20" height="20" />
+        <span>Twigg</span>
+      </div>
+      <span id="provider-badge" class="badge" title="Which AI answers your questions"></span>
+      <button id="open-profile" class="icon-btn" title="My profile & resume" aria-label="My profile and resume">👤</button>
+      <button id="open-settings" class="icon-btn" title="Settings" aria-label="Settings">⚙</button>
+    </header>
+
+    <nav class="tabs" role="tablist">
+      <button role="tab" data-tab="chat" aria-selected="true">Chat</button>
+      <button role="tab" data-tab="fill">Fill</button>
+      <button role="tab" data-tab="roles">Roles</button>
+      <button role="tab" data-tab="tracker">Tracker</button>
+      <button role="tab" data-tab="post">Post</button>
+      <button role="tab" data-tab="tailor">Tailor</button>
+      <button role="tab" data-tab="outreach">Outreach</button>
+    </nav>
+
+    <main>
+      <section id="tab-chat" class="panel chat" role="tabpanel">
+        <div id="profile-warning" class="notice warn" hidden>
+          Your profile is empty, so answers won't be personalised.
+          <a href="#" id="profile-link">Add your resume</a> to get started.
+        </div>
+
+        <div class="page-bar">
+          <label class="toggle" title="Send this page's text with your question">
+            <input id="use-page" type="checkbox" checked />
+            <span>Use page</span>
+          </label>
+          <span id="page-title" class="page-title muted"></span>
+        </div>
+
+        <div id="messages" class="messages" aria-live="polite">
+          <div class="empty-state">
+            <p><strong>Ask anything about the page you're on.</strong></p>
+            <p class="muted">Open a job or internship page, then try one of these:</p>
+          </div>
+        </div>
+
+        <div id="quick-prompts" class="chips"></div>
+
+        <form id="composer" class="composer">
+          <textarea id="input" rows="2" placeholder="Ask about this page…  (Enter to send, Shift+Enter for new line)"></textarea>
+          <div class="composer-actions">
+            <button type="button" id="new-chat" class="btn" title="Clear the conversation">New chat</button>
+            <button type="button" id="stop" class="btn" hidden>Stop</button>
+            <button type="submit" id="send" class="btn primary">Send</button>
+          </div>
+        </form>
+      </section>
+
+      <section id="tab-fill" class="panel fill" role="tabpanel" hidden>
+        <p class="muted small">
+          Fills the form on this page from your profile. You review the colours and press Submit yourself —
+          Twigg never submits and never ticks consent boxes.
+        </p>
+        <button id="fill-run" class="btn primary big">Fill this page <kbd>Alt+F</kbd></button>
+        <div class="fill-options">
+          <label class="toggle"><input id="fill-ai" type="checkbox" checked /><span>Use AI for fields my profile can't answer</span></label>
+          <label class="toggle"><input id="fill-overwrite" type="checkbox" /><span>Overwrite fields that already have text</span></label>
+        </div>
+        <div id="fill-progress" class="notice ok" hidden aria-live="polite"></div>
+        <div id="fill-error" class="notice error" hidden></div>
+
+        <div id="fill-result" hidden>
+          <div id="fill-counts" class="counts"></div>
+          <div id="fill-notes"></div>
+          <div id="resume-choice" class="resume-choice" hidden>
+            <strong>This form wants a resume. Which one should I attach?</strong>
+            <div id="resume-options" class="resume-options" role="radiogroup" aria-label="Resume to attach"></div>
+            <button id="resume-attach" class="btn primary" disabled>Attach</button>
+            <div id="resume-attach-note" class="notice" hidden></div>
+          </div>
+          <h4 id="attention-title">Needs your eye <span class="muted small">(click one to jump to it)</span></h4>
+          <ul id="attention" class="attention"></ul>
+          <div class="legend">
+            <span><i class="dot green"></i>from your profile</span>
+            <span><i class="dot yellow"></i>check it</span>
+            <span><i class="dot red"></i>needs you</span>
+          </div>
+          <div class="row">
+            <button id="fill-clear" class="btn">Clear highlights</button>
+            <button id="fill-remember" class="btn" title="Fill the red/yellow fields yourself first, then click this">Remember my answers…</button>
+          </div>
+          <div id="remember-box" class="remember" hidden>
+            <p class="muted small">Tick the answers Twigg should reuse on future forms. They're saved under “Reusable answers” in your profile.</p>
+            <ul id="remember-list"></ul>
+            <div class="row">
+              <button id="remember-save" class="btn primary">Save selected</button>
+              <button id="remember-cancel" class="btn">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="tab-roles" class="panel roles" role="tabpanel" hidden>
+        <div id="page-card" class="page-card" hidden></div>
+
+        <div class="roles-head">
+          <label class="toggle" title="Save job, internship and hackathon pages as you open them"><input id="auto-collect" type="checkbox" /><span>Collect roles as I browse</span></label>
+          <span class="row">
+            <button id="scan-page" class="btn small" title="Read the roles on the page you have open">Scan this page</button>
+            <button id="filters-toggle" class="btn small" aria-expanded="false">Filters</button>
+          </span>
+        </div>
+
+        <form id="filters-box" class="filters-box" hidden>
+          <label>Role keywords <span class="muted">(comma-separated; a title with any of these is a match)</span><textarea id="f-keywords" rows="3"></textarea></label>
+          <label>Skip titles containing <textarea id="f-exclude" rows="2"></textarea></label>
+          <div class="two">
+            <label>Min stipend ₹/month <input id="f-minstipend" type="number" min="0" step="1000" /></label>
+            <label>Max duration (months) <input id="f-maxdur" type="number" min="0" step="1" /></label>
+          </div>
+          <label>Only these locations <span class="muted">(comma-separated, empty = anywhere)</span><input id="f-locations" type="text" /></label>
+          <div class="two">
+            <label>Your batch (graduation year) <input id="f-batch" type="text" inputmode="numeric" /></label>
+            <label class="toggle remote"><input id="f-remote" type="checkbox" /><span>Remote only</span></label>
+          </div>
+          <div class="row">
+            <button type="submit" class="btn primary">Save &amp; re-check</button>
+            <button type="button" id="f-reset" class="btn">Reset to defaults</button>
+          </div>
+        </form>
+
+        <div id="role-views" class="chips views" role="tablist"></div>
+        <div class="roles-tools">
+          <input id="role-search" type="search" placeholder="Search saved roles…" aria-label="Search saved roles" />
+        </div>
+        <div class="row actions-row">
+          <button id="score-all" class="btn small" title="AI-rates unrated matches against your profile (free-tier friendly: a few at a time)">Rate fit for matches</button>
+          <button id="score-stop" class="btn small" hidden>Stop</button>
+          <button id="export-csv" class="btn small">Export CSV</button>
+          <button id="gap-btn" class="btn small" aria-expanded="false" title="What your saved roles keep asking for that your resume lacks">Skill gaps</button>
+        </div>
+        <div id="gap-card" class="gap-card" hidden></div>
+        <div id="roles-notice" class="notice ok" hidden aria-live="polite"></div>
+        <button id="diagnose" class="btn small" hidden title="Copies only the page's link patterns and layout — no names, text or personal details">Copy page details (no personal info)</button>
+        <ul id="roles-list" class="role-list"></ul>
+      </section>
+
+      <section id="tab-tracker" class="panel tracker" role="tabpanel" hidden>
+        <div id="upcoming" class="upcoming" hidden></div>
+        <div id="pipeline" class="chips views" role="tablist"></div>
+        <ul id="tracker-list" class="role-list"></ul>
+      </section>
+      <section id="tab-post" class="panel post" role="tabpanel" hidden>
+        <label class="field"><span>What kind of post?</span><select id="post-type"></select></label>
+        <label class="field">
+          <span>Your notes <span class="muted">(rough is fine — Twigg only uses facts you give it)</span></span>
+          <textarea id="post-notes" rows="5"></textarea>
+          <span id="post-hint" class="muted small"></span>
+        </label>
+        <div class="use-page">
+          <label class="toggle"><input id="post-use-page" type="checkbox" /><span>Also use this page (GitHub repo, project, certificate…)</span></label>
+          <span id="post-page-title" class="muted small"></span>
+        </div>
+        <label class="field"><span>Link to include <span class="muted">(optional)</span></span><input id="post-link" type="text" placeholder="https://github.com/you/project" /></label>
+        <div class="two">
+          <label class="field"><span>Length</span>
+            <select id="post-length"><option value="short">Short (~80 words)</option><option value="medium" selected>Medium (~150)</option><option value="long">Long (~240)</option></select></label>
+          <label class="field"><span>Tone</span>
+            <select id="post-tone"><option value="plain" selected>Plain &amp; sincere</option><option value="professional">Professional</option><option value="casual">Casual</option></select></label>
+        </div>
+        <button id="post-write" class="btn primary big">Write 2 drafts</button>
+        <div id="post-progress" class="notice ok" hidden aria-live="polite"></div>
+        <div id="post-error" class="notice error" hidden></div>
+        <div id="post-results" class="post-results"></div>
+        <p class="muted small">Drafts match the writing samples you added in your profile. Twigg types the draft into LinkedIn's post box but never presses Post.</p>
+      </section>
+      <section id="tab-tailor" class="panel tailor" role="tabpanel" hidden>
+        <label class="field" id="tl-resume-wrap"><span>Which resume to tailor</span><select id="tl-resume"></select></label>
+        <label class="field"><span>Job to tailor it for</span><select id="tl-source"></select></label>
+        <label class="field" id="tl-paste-wrap" hidden><span>Paste the job description</span><textarea id="tl-paste" rows="6"></textarea></label>
+        <div id="tl-resume-status" class="notice warn" hidden></div>
+        <button id="tl-analyse" class="btn primary big">Check my resume for this job</button>
+        <div id="tl-progress" class="notice ok" hidden aria-live="polite"></div>
+        <div id="tl-error" class="notice error" hidden></div>
+
+        <div id="tl-result" hidden>
+          <div class="score-row">
+            <div id="tl-score" class="score" aria-label="Keyword match score"></div>
+            <div id="tl-score-note" class="muted small"></div>
+          </div>
+
+          <h4>Already on your resume</h4>
+          <div id="tl-matched" class="chips kw"></div>
+
+          <h4>On your profile, missing from your resume</h4>
+          <p class="muted small">You list these yourself, so you can honestly add them.</p>
+          <div id="tl-addable" class="chips kw"></div>
+          <div class="row"><button id="tl-copy-skills" class="btn small" hidden>Copy “add to Skills” line</button></div>
+
+          <h4>Not on your profile</h4>
+          <p class="muted small">Real gaps. Don't claim these on your resume; learn or build something first.</p>
+          <div id="tl-gaps" class="chips kw"></div>
+
+          <div id="tl-rewrite-block" class="rewrite-block">
+            <h4>Reword your bullets for this job</h4>
+            <p class="muted small">The AI may only reword what you already wrote. Anything that adds a number or a tool is thrown away.</p>
+            <button id="tl-suggest" class="btn">Suggest bullet rewrites</button>
+            <div id="tl-suggest-note" class="notice" hidden></div>
+            <ul id="tl-suggestions" class="suggestions"></ul>
+            <button id="tl-build" class="btn primary" hidden>Build tailored .tex</button>
+          </div>
+
+          <div id="tl-export" class="export" hidden>
+            <div id="tl-delta" class="notice ok"></div>
+            <div class="row">
+              <button id="tl-download" class="btn primary">Download .tex</button>
+              <button id="tl-copy-tex" class="btn">Copy .tex</button>
+            </div>
+            <p class="muted small">Upload it to Overleaf (or paste into your project) to get the PDF. Only the bullets you accepted changed. Check the PDF before sending it.</p>
+            <details><summary>Preview the file</summary><textarea id="tl-tex" rows="10" readonly></textarea></details>
+          </div>
+        </div>
+      </section>
+      <section id="tab-outreach" class="panel outreach" role="tabpanel" hidden>
+        <label class="field"><span>What kind of message?</span><select id="oc-type"></select></label>
+        <span id="oc-hint" class="muted small"></span>
+        <label class="field"><span>About which role <span class="muted">(optional)</span></span><select id="oc-role"></select></label>
+        <div class="use-page">
+          <label class="toggle"><input id="oc-use-page" type="checkbox" /><span>Use this page about the person (LinkedIn profile, faculty page, company page)</span></label>
+          <span id="oc-page-title" class="muted small"></span>
+        </div>
+        <label class="field" id="oc-to-wrap"><span>To <span class="muted">(filled only if the page shows an address — Twigg never guesses)</span></span><input id="oc-to" type="text" placeholder="name@university.edu" /></label>
+        <label class="field"><span>What you want to say</span><textarea id="oc-notes" rows="4"></textarea></label>
+        <label class="field"><span>Tone</span>
+          <select id="oc-tone"><option value="warm" selected>Warm &amp; direct</option><option value="formal">Formal</option><option value="casual">Casual</option></select></label>
+        <button id="oc-write" class="btn primary big">Write draft</button>
+        <div id="oc-progress" class="notice ok" hidden aria-live="polite"></div>
+        <div id="oc-error" class="notice error" hidden></div>
+
+        <div id="oc-result" class="draft" hidden>
+          <label class="field" id="oc-subject-wrap"><span>Subject</span><input id="oc-subject" type="text" /></label>
+          <textarea id="oc-body" rows="12" spellcheck="true"></textarea>
+          <div class="draft-head"><span id="oc-count" class="count muted"></span></div>
+          <div id="oc-warnings" class="notice warn" hidden></div>
+          <div class="row">
+            <button id="oc-copy" class="btn primary">Copy</button>
+            <button id="oc-gmail" class="btn">Open in Gmail</button>
+          </div>
+          <div id="oc-tweaks" class="tweaks"></div>
+          <div id="oc-note" class="notice ok" hidden></div>
+        </div>
+        <p class="muted small">Twigg writes the draft; you read it and send it yourself. It never sends anything and never guesses an email address. Check every name and fact before you send.</p>
+      </section>
+    </main>
+
+    <script type="module" src="sidepanel.js"></script>
+  </body>
+</html>

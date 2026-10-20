@@ -1,0 +1,72 @@
+.wrap {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 24px 16px 80px;
+}
+header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+h1 { margin: 0; font-size: 22px; }
+header p { margin: 0; }
+h2 { margin: 0 0 8px; font-size: 16px; }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow);
+}
+.card p { margin: 0 0 10px; }
+.card a { color: var(--accent-strong); }
+
+.choices { display: grid; gap: 8px; margin-bottom: 12px; }
+.choice {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+.choice:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+.choice input { accent-color: var(--accent); margin-top: 3px; }
+
+.field { display: grid; gap: 4px; margin-bottom: 10px; font-size: 13px; }
+.field > span { font-weight: 600; }
+.row { display: flex; gap: 8px; align-items: center; }
+.row input { flex: 1; }
+.small { font-size: 12.5px; margin: 0; }
+
+.status { font-size: 13px; }
+.status.ok { color: var(--accent-strong); }
+.status.error { color: var(--danger); }
+
+.checklist { list-style: none; padding: 0; margin: 0 0 12px; display: grid; gap: 4px; }
+.checklist li::before { content: '○ '; color: var(--muted); }
+.checklist li.ok::before { content: '● '; color: var(--accent); }
+.checklist li.missing::before { content: '● '; color: var(--warn); }
+
+code {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  background: var(--surface-2);
+  padding: 1px 4px;
+  border-radius: 4px;
+}
+
+.savebar {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  background: var(--bg);
+}

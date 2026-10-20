@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Twigg Settings</title>
+    <link rel="stylesheet" href="../ui/theme.css" />
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <img src="../icons/icon48.png" alt="" width="36" height="36" />
+        <div>
+          <h1>Twigg settings</h1>
+          <p class="muted">Everything here is stored only in this browser.</p>
+        </div>
+      </header>
+
+      <section class="card">
+        <h2>Which AI should Twigg use?</h2>
+        <div class="choices" role="radiogroup">
+          <label class="choice">
+            <input type="radio" name="provider" value="auto" />
+            <span><strong>Gemini, fall back to Ollama</strong><br /><span class="muted">Fast and smart. Uses your local model if Gemini fails or hits its free limit.</span></span>
+          </label>
+          <label class="choice">
+            <input type="radio" name="provider" value="gemini" />
+            <span><strong>Gemini only</strong><br /><span class="muted">Free API key, cloud.</span></span>
+          </label>
+          <label class="choice">
+            <input type="radio" name="provider" value="ollama" />
+            <span><strong>Ollama only (private mode)</strong><br /><span class="muted">Nothing leaves your laptop. Slower on CPU.</span></span>
+          </label>
+        </div>
+        <p class="notice warn small">
+          On Gemini's free tier, Google may use your prompts to improve its products. Twigg sends only the page and
+          the resume parts a task needs, and never your phone, address or date of birth. For sensitive pages, use private mode.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Gemini (free)</h2>
+        <p class="muted">Get a free key at <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a>.</p>
+        <label class="field">
+          <span>API key</span>
+          <input id="geminiKey" type="password" autocomplete="off" spellcheck="false" placeholder="AIza…" />
+        </label>
+        <label class="field">
+          <span>Model</span>
+          <div class="row">
+            <input id="geminiModel" type="text" list="gemini-models" spellcheck="false" />
+            <datalist id="gemini-models"></datalist>
+            <button class="btn" data-load="gemini">Load models</button>
+          </div>
+        </label>
+        <div class="row">
+          <button class="btn" data-test="gemini">Test Gemini</button>
+          <span class="status" id="status-gemini" aria-live="polite"></span>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Ollama (local)</h2>
+        <p class="muted">
+          Needs a one-time setup so the extension may talk to Ollama. See <em>README → Ollama setup</em>.
+        </p>
+        <label class="field">
+          <span>Server URL</span>
+          <input id="ollamaUrl" type="url" spellcheck="false" />
+        </label>
+        <label class="field">
+          <span>Model</span>
+          <div class="row">
+            <input id="ollamaModel" type="text" list="ollama-models" spellcheck="false" />
+            <datalist id="ollama-models"></datalist>
+            <button class="btn" data-load="ollama">Load models</button>
+          </div>
+        </label>
+        <div class="row">
+          <button class="btn" data-test="ollama">Test Ollama</button>
+          <span class="status" id="status-ollama" aria-live="polite"></span>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Your profile</h2>
+        <p class="muted">
+          Upload your resume and edit your details on the profile page. You can update it any time.
+        </p>
+        <ul id="profile-status" class="checklist"></ul>
+        <a class="btn primary" href="../editor/editor.html">Open profile &amp; resume</a>
+        <button class="btn" id="reload" title="Restart the extension (only needed after changing its code)">Reload Twigg</button>
+      </section>
+
+      <div class="savebar">
+        <span id="saved" class="muted" aria-live="polite"></span>
+        <button class="btn primary" id="save">Save settings</button>
+      </div>
+    </div>
+    <script type="module" src="options.js"></script>
+  </body>
+</html>

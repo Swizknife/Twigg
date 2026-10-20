@@ -1,0 +1,18 @@
+# dependencies / build output
+node_modules/
+dist/
+
+# logs and OS files
+*.log
+.DS_Store
+Thumbs.db
+
+# secrets — never commit these
+.env
+.env.*
+*.pem
+*.key
+
+# personal data exported from Twigg's profile page (resumes, details) — keep out of Git
+twigg-backup-*.json
+*.pdf

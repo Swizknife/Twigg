@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Twigg Profile</title>
+    <link rel="stylesheet" href="../ui/theme.css" />
+    <link rel="stylesheet" href="editor.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <img src="../icons/icon48.png" alt="" width="36" height="36" />
+        <div>
+          <h1>Your profile</h1>
+          <p class="muted">Twigg uses this to fill forms and answer questions. It is stored only in this browser.</p>
+        </div>
+        <a class="btn" id="open-settings" href="../options/options.html">AI settings</a>
+      </header>
+
+      <section class="card">
+        <h2>Your resumes</h2>
+        <p class="muted">
+          One resume per role you apply for (for example “AI Engineering” and “Edge AI”). Upload its PDF and .tex —
+          Twigg reads it straight away and fills in what that resume shows. Changed fields are highlighted; nothing is
+          saved until you press Save.
+        </p>
+        <div id="resume-list" class="resume-list"></div>
+        <button class="btn" id="add-resume">+ Add another resume</button>
+      </section>
+
+      <section class="card">
+        <h2>About you <span class="muted small">(the same on every resume)</span></h2>
+        <p class="muted">Leave a field empty if it doesn't apply — Twigg will never guess it. Form-only details (date of birth, 10th/12th marks, address) are not in a resume, so fill them here once.</p>
+        <div id="shared-status" class="notice" hidden aria-live="polite"></div>
+        <div id="profile-form"></div>
+      </section>
+
+      <section class="card">
+        <h2>Reusable answers</h2>
+        <p class="muted">Answers you give often (“Why do you want to join us?”, notice period, relocation…). Twigg reuses and adapts them. Answers you save from forms land here too.</p>
+        <div id="answers-form"></div>
+      </section>
+
+      <section class="card">
+        <h2>Your writing style</h2>
+        <p class="muted">Paste 2–3 LinkedIn posts or emails you wrote. Twigg copies your tone when it drafts posts and messages.</p>
+        <textarea id="voice" rows="8" placeholder="Paste your own writing here…"></textarea>
+      </section>
+
+      <section class="card">
+        <h2>Backup</h2>
+        <p class="muted">Your data lives only in this browser. Export a backup to move it to another browser or keep a copy.</p>
+        <div class="row">
+          <button class="btn" id="export">Export backup</button>
+          <label class="btn">Import backup<input type="file" id="import-backup" accept="application/json,.json" hidden /></label>
+        </div>
+      </section>
+
+      <div class="savebar">
+        <span id="save-status" class="muted" aria-live="polite"></span>
+        <button class="btn" id="discard" disabled>Discard changes</button>
+        <button class="btn primary" id="save" disabled>Save</button>
+      </div>
+    </div>
+    <script type="module" src="editor.js"></script>
+  </body>
+</html>

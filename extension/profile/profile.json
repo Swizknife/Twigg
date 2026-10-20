@@ -1,0 +1,89 @@
+{
+  "basics": {
+    "name": "",
+    "headline": "",
+    "email": "",
+    "phone": "",
+    "phoneCountryCode": "",
+    "linkedin": "",
+    "github": "",
+    "portfolio": "",
+    "dateOfBirth": "",
+    "gender": "",
+    "nationality": "",
+    "address": {
+      "line": "",
+      "city": "",
+      "state": "",
+      "postalCode": "",
+      "country": "India"
+    },
+    "currentCity": ""
+  },
+  "education": [
+    {
+      "institution": "Birla Institute of Technology, Mesra",
+      "degree": "",
+      "branch": "Electronics and Communication Engineering",
+      "startYear": "",
+      "graduationYear": "",
+      "cgpa": "",
+      "cgpaScale": "10",
+      "rollNumber": ""
+    },
+    {
+      "institution": "",
+      "degree": "Class 12",
+      "board": "",
+      "year": "",
+      "score": "",
+      "scoreType": "percentage"
+    },
+    {
+      "institution": "",
+      "degree": "Class 10",
+      "board": "",
+      "year": "",
+      "score": "",
+      "scoreType": "percentage"
+    }
+  ],
+  "skills": {
+    "programming": [],
+    "ml_dl": [],
+    "edge_ai": [],
+    "embedded_hardware": [],
+    "tools": []
+  },
+  "projects": [
+    {
+      "name": "",
+      "link": "",
+      "tech": [],
+      "bullets": []
+    }
+  ],
+  "experience": [
+    {
+      "company": "",
+      "role": "",
+      "start": "",
+      "end": "",
+      "location": "",
+      "bullets": []
+    }
+  ],
+  "achievements": [],
+  "certifications": [],
+  "preferences": {
+    "targetRoles": ["AI Engineer Intern", "Edge AI Engineer Intern", "ML Engineer Intern"],
+    "jobTypes": ["Internship"],
+    "locations": [],
+    "openToRemote": true,
+    "openToInternational": true,
+    "minStipendINR": "",
+    "durationsMonths": [],
+    "availableFrom": "",
+    "willingToRelocate": ""
+  }
+}
